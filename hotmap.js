@@ -109,8 +109,11 @@ class Im3xWidget {
                 var level = this.getLevel(data.data.hotmap, dt);
                 console.log(level)
                 let hotColor = "";
-                switch (level) {
+                console.log(level+"");
+                switch (level+"") {
+                    case "":
                     case "-1":
+                    default:
                         hotColor = "#ffffff";
                         break;
                     case "0":
@@ -131,10 +134,8 @@ class Im3xWidget {
                     case "5":
                         hotColor = "#21472c";
                         break;
-                    default:
-                        hotColor: "#ffffff";
-                        break;
                 }
+                console.log(hotColor);
 
                 context.setFillColor(new Color(hotColor, 1))
                 let path = new Path()
