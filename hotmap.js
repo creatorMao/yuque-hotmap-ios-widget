@@ -15,7 +15,7 @@ class IosWidget {
         } else if (this.widgetSize === 'large') {
             return await this.renderUI(16)
         } else {
-            return await this.renderUI(20)
+            return await this.renderUI(16)
         }
     }
 
@@ -171,12 +171,15 @@ class IosWidget {
     //编辑测试使用
     async test() {
         if (config.runsInWidget) return
+        
         this.widgetSize = 'small'
         let w1 = await this.render()
         await w1.presentSmall()
+
         this.widgetSize = 'medium'
         let w2 = await this.render()
         await w2.presentMedium()
+
         this.widgetSize = 'large'
         let w3 = await this.render()
         await w3.presentLarge()
