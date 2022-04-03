@@ -104,10 +104,12 @@ class Im3xWidget {
                 //周4       23
                 //周5       24
                 //周6       25
-                var dt = this.getTime(new Date(start + (dayTime * day) + (week + 1) * weekTime))
+                var offsetDate=new Date(start + (dayTime * day) + (week) * weekTime)
+                console.log(offsetDate);
+                var dt = this.getTime(offsetDate)
                 console.log(dt)
                 var level = this.getLevel(data.data.hotmap, dt);
-                console.log(level)
+                //console.log(level)
                 let hotColor = "";
                 console.log(level+"");
                 switch (level+"") {
@@ -135,7 +137,7 @@ class Im3xWidget {
                         hotColor = "#21472c";
                         break;
                 }
-                console.log(hotColor);
+                //console.log(hotColor);
 
                 context.setFillColor(new Color(hotColor, 1))
                 let path = new Path()
@@ -167,7 +169,7 @@ class Im3xWidget {
         let api = 'https://www.yuque.com/api/users/1493705/hotmap?end_date=' + end + '&start_date=' + start
         let req = new Request(api)
         let res = await req.loadJSON()
-        console.log(res)
+        //console.log(res)
         return res
     }
     //加载远程图片
