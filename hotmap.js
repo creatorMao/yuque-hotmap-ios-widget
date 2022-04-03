@@ -1,4 +1,4 @@
-class Im3xWidget {
+class IosWidget {
     /**
     * 初始化
     * @param arg 外部传递过来的参数
@@ -11,11 +11,11 @@ class Im3xWidget {
     //渲染组件
     async render() {
         if (this.widgetSize === 'small') {
-            return await this.renderSmall()
+            return await this.renderUI()
         } else if (this.widgetSize === 'large') {
-            return await this.renderLarge()
+            return await this.renderUI()
         } else {
-            return await this.renderMedium()
+            return await this.renderUI()
         }
     }
 
@@ -49,29 +49,31 @@ class Im3xWidget {
     }
 
     async renderUI() {
-        let w = new ListWidget()
-        let weekDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
+        let container = new ListWidget()
 
         //标题
-        let header = w.addStack()
-        //         let icon = header.addImage(await this.getImage('https://gw.alipayobdayects.com/mdn/prod_resou/afts/img/A*OwZWQ68zSTMAAAAAAAAAAABkARQnAQ'))
-        //         icon.imageSize = new Size(40, 16)
-        let title = header.addText("｜创作指数")
-
-        title.font = Font.systemFont(10)
+        let header = container.addStack()
         header.centerAlignContent()
-        w.addSpacer(4)
+
+        let icon = header.addImage(await this.getImage('https://gw.alipayobjects.com/mdn/prod_resou/afts/img/A*OwZWQ68zSTMAAAAAAAAAAABkARQnAQ'))
+        icon.imageSize = new Size(40, 16)
+        
+        let title = header.addText("｜创作指数")
+        title.font = Font.systemFont(10)
+        
+        container.addSpacer(4)
 
         //创作指数
-        //start_date 1639891218374 2021-12-19 13:20:18
-        //end_date   1648963218374 2022-04-03 13:20:18
+        //start_date 开始日期 1639891218374 2021-12-19 13:20:18
+        //end_date   结束日期 1648963218374 2022-04-03 13:20:18
         var dayTime = 24 * 3600 * 1000;
         var weekTime = 7 * dayTime;
         let end = new Date().getTime()
         let start = new Date(end - 15 * weekTime).getTime()
         let data = await this.getData(end, start)
+        let weekDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
         for (let day = 0; day < weekDay.length; day++) {
-            let row = w.addStack()
+            let row = container.addStack()
 
             let ww = 1
             let h = 1
@@ -147,25 +149,12 @@ class Im3xWidget {
                 row.addImage(context.getImage())
                 row.addSpacer(3)
             }
-            w.addSpacer(3)
+            container.addSpacer(3)
         }
-        return w
-    }
-    //渲染小尺寸组件
-    async renderSmall() {
-        return this.renderUI()
-    }
-    //渲染中尺寸组件
-    async renderMedium() {
-        return this.renderUI();
-    }
-    //渲染大尺寸组件
-    async renderLarge() {
-        return this.renderUI()
+        return container
     }
     //加载下载数据
     async getData(end, start) {
-
         let api = 'https://www.yuque.com/api/users/1493705/hotmap?end_date=' + end + '&start_date=' + start
         let req = new Request(api)
         let res = await req.loadJSON()
@@ -198,8 +187,8 @@ class Im3xWidget {
         Script.complete()
     }
 }
-module.exports = Im3xWidget
+module.exports = IosWidget
 // 如果是在编辑器内编辑、运行、测试，则取消注释这行，便于调试：// 
-await new Im3xWidget().test()
+await new IosWidget().test()
 // 如果是组件单独使用（桌面配置选择这个组件使用，则取消注释这一行：// 
-await new Im3xWidget(args.widgetParameter).init()
+await new IosWidget(args.widgetParameter).init()
