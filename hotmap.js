@@ -56,6 +56,14 @@ class IosWidget {
     async renderUI(weekCount = 16) {
         let container = new ListWidget()
 
+        if (!this.arg) {
+            var tips = container.addText('请在小组件参数处填写余雀用户id！')
+            tips.textColor = new Color("#fb7299")
+            tips.font = Font.systemFont(14)
+
+            return container
+        }
+
         //标题
         let header = container.addStack()
         header.centerAlignContent()
@@ -157,7 +165,7 @@ class IosWidget {
     }
     //加载下载数据
     async getData(end, start) {
-        let api = 'https://www.yuque.com/api/users/1493705/hotmap?end_date=' + end + '&start_date=' + start
+        let api = 'https://www.yuque.com/api/users/' + this.arg + '/hotmap?end_date=' + end + '&start_date=' + start
         let req = new Request(api)
         let res = await req.loadJSON()
         //console.log(res)
@@ -171,7 +179,7 @@ class IosWidget {
     //编辑测试使用
     async test() {
         if (config.runsInWidget) return
-        
+
         this.widgetSize = 'small'
         let w1 = await this.render()
         await w1.presentSmall()
