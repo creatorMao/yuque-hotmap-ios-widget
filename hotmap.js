@@ -11,11 +11,11 @@ class IosWidget {
     //渲染组件
     async render() {
         if (this.widgetSize === 'small') {
-            return await this.renderUI(8)
+            return await this.renderUI(7)
         } else if (this.widgetSize === 'large') {
             return await this.renderUI(16)
         } else {
-            return await this.renderUI(16)
+            return await this.renderUI(20)
         }
     }
 
@@ -53,7 +53,7 @@ class IosWidget {
      * @param {*} weekCount 统计周数
      * @returns 
      */
-    async renderUI(weekCount=16) {
+    async renderUI(weekCount = 16) {
         let container = new ListWidget()
 
         //标题
@@ -71,7 +71,7 @@ class IosWidget {
         var dayTime = 24 * 3600 * 1000;
         var weekTime = 7 * dayTime;
         let end = new Date().getTime()
-        let start = new Date(end - (weekCount-1) * weekTime).getTime()
+        let start = new Date(end - (weekCount - 1) * weekTime).getTime()
         let data = await this.getData(end, start)
         let weekDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
         for (let day = 0; day < weekDay.length; day++) {
@@ -171,15 +171,15 @@ class IosWidget {
     //编辑测试使用
     async test() {
         if (config.runsInWidget) return
-        //this.widgetSize = 'small'
-        //let w1 = await this.render()
-        //await w1.presentSmall()
+        this.widgetSize = 'small'
+        let w1 = await this.render()
+        await w1.presentSmall()
         this.widgetSize = 'medium'
         let w2 = await this.render()
         await w2.presentMedium()
-        //this.widgetSize = 'large'
-        //let w3 = await this.render()
-        //await w3.presentLarge()
+        this.widgetSize = 'large'
+        let w3 = await this.render()
+        await w3.presentLarge()
     }
     //组件单独在桌面运行时调用
     async init() {
@@ -190,7 +190,7 @@ class IosWidget {
     }
 }
 module.exports = IosWidget
-// 如果是在编辑器内编辑、运行、测试，则取消注释这行，便于调试：// 
+// 如果是在编辑器内编辑、运行、测试，则取消注释这行，便于调试：
 await new IosWidget().test()
-// 如果是组件单独使用（桌面配置选择这个组件使用，则取消注释这一行：// 
+// 如果是组件单独使用（桌面配置选择这个组件使用，则取消注释这一行：
 await new IosWidget(args.widgetParameter).init()
