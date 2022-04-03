@@ -19,15 +19,18 @@ class Im3xWidget {
         }
     }
 
-    getTime(time){
-        return time.toLocaleDateString().replaceAll("/",'')
+    getTime(datetime) {
+        var year = datetime.getFullYear();
+        var month = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
+        var date = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
+        var text = year + month + date;
+        return text;
     }
 
-    getLevel(list,dt){
-        var level="";
-        list.forEach((item)=>{
-            if(item.biz_date==dt)
-            {
+    getLevel(list, dt) {
+        var level = "";
+        list.forEach((item) => {
+            if (item.biz_date == dt) {
                 return item.level
             }
         })
@@ -50,11 +53,11 @@ class Im3xWidget {
         //创作指数
         //start_date 1639891218374 2021-12-19 13:20:18
         //end_date   1648963218374 2022-04-03 13:20:18
-        var dayTime=24 * 3600 * 1000;
-        var weekTime=7 * dayTime;
-        let end=new Date().getTime()
-        let start=new Date(end- 15*weekTime).getTime()
-        let data = await this.getData(end,start)
+        var dayTime = 24 * 3600 * 1000;
+        var weekTime = 7 * dayTime;
+        let end = new Date().getTime()
+        let start = new Date(end - 15 * weekTime).getTime()
+        let data = await this.getData(end, start)
         for (let day = 0; day < weekDay.length; day++) {
             let row = w.addStack()
 
@@ -73,7 +76,7 @@ class Im3xWidget {
             }
 
             //设置创作指数
-            for (let week = 0; i < 16; week++) {
+            for (let week = 0; week < 16; week++) {
                 let context = new DrawContext()
                 context.size = new Size(ww, h)
                 context.opaque = false
@@ -89,34 +92,33 @@ class Im3xWidget {
                 //周4       23
                 //周5       24
                 //周6       25
-                var dt= this.getTime(new Date(start+(dayTime*day)+ (week+1)*weekTime))
-                var level=getLevel(data.data.hotmap,dt);
-                let hotColor="";
-                switch(level)
-                {
+                var dt = this.getTime(new Date(start + (dayTime * day) + (week + 1) * weekTime))
+                var level = this.getLevel(data.data.hotmap, dt);
+                let hotColor = "";
+                switch (level) {
                     case "-1":
-                        hotColor="#ffffff";
+                        hotColor = "#ffffff";
                         break;
                     case "0":
-                        hotColor="#f5f5f5";
+                        hotColor = "#f5f5f5";
                         break;
                     case "1":
-                        hotColor="#e1f2e2";
+                        hotColor = "#e1f2e2";
                         break;
                     case "2":
-                        hotColor="#bee8c8";
+                        hotColor = "#bee8c8";
                         break;
                     case "3":
-                        hotColor="#6bb579";
+                        hotColor = "#6bb579";
                         break;
                     case "4":
-                        hotColor="#397549";
+                        hotColor = "#397549";
                         break;
                     case "5":
-                        hotColor="#21472c";
+                        hotColor = "#21472c";
                         break;
                     default:
-                        hotColor:"#ffffff";
+                        hotColor: "#ffffff";
                         break;
                 }
 
@@ -145,9 +147,9 @@ class Im3xWidget {
         return this.renderUI()
     }
     //加载下载数据
-    async getData(end,start) {
-        
-        let api = 'https://www.yuque.com/api/users/1493705/hotmap?end_date='+end+'&start_date='+start
+    async getData(end, start) {
+
+        let api = 'https://www.yuque.com/api/users/1493705/hotmap?end_date=' + end + '&start_date=' + start
         let req = new Request(api)
         let res = await req.loadJSON()
         console.log(res)
