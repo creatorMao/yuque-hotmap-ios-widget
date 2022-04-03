@@ -54,13 +54,10 @@ class IosWidget {
         //标题
         let header = container.addStack()
         header.centerAlignContent()
-
         let icon = header.addImage(await this.getImage('https://gw.alipayobjects.com/mdn/prod_resou/afts/img/A*OwZWQ68zSTMAAAAAAAAAAABkARQnAQ'))
         icon.imageSize = new Size(40, 16)
-        
         let title = header.addText("｜创作指数")
         title.font = Font.systemFont(10)
-        
         container.addSpacer(4)
 
         //创作指数
@@ -107,13 +104,13 @@ class IosWidget {
                 //周5       24
                 //周6       25
                 var offsetDate = new Date(start + (dayTime * day) + (week) * weekTime)
-                console.log(offsetDate);
+                //console.log(offsetDate);
                 var dt = this.getTime(offsetDate)
-                console.log(dt)
+                //console.log(dt)
                 var level = this.getLevel(data.data.hotmap, dt);
                 //console.log(level)
                 let hotColor = "";
-                console.log(level + "");
+                //console.log(level + "");
                 switch (level + "") {
                     case "":
                     case "-1":
