@@ -11,11 +11,11 @@ class IosWidget {
     //渲染组件
     async render() {
         if (this.widgetSize === 'small') {
-            return await this.renderUI()
+            return await this.renderUI(8)
         } else if (this.widgetSize === 'large') {
-            return await this.renderUI()
+            return await this.renderUI(16)
         } else {
-            return await this.renderUI()
+            return await this.renderUI(16)
         }
     }
 
@@ -48,7 +48,12 @@ class IosWidget {
         return level
     }
 
-    async renderUI() {
+    /**
+     * 渲染小组件UI
+     * @param {*} weekCount 统计周数
+     * @returns 
+     */
+    async renderUI(weekCount=16) {
         let container = new ListWidget()
 
         //标题
@@ -66,7 +71,7 @@ class IosWidget {
         var dayTime = 24 * 3600 * 1000;
         var weekTime = 7 * dayTime;
         let end = new Date().getTime()
-        let start = new Date(end - 15 * weekTime).getTime()
+        let start = new Date(end - (weekCount-1) * weekTime).getTime()
         let data = await this.getData(end, start)
         let weekDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
         for (let day = 0; day < weekDay.length; day++) {
@@ -87,7 +92,7 @@ class IosWidget {
             }
 
             //设置创作指数
-            for (let week = 0; week < 16; week++) {
+            for (let week = 0; week < weekCount; week++) {
                 let context = new DrawContext()
                 context.size = new Size(ww, h)
                 context.opaque = false
