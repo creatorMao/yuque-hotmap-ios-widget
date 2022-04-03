@@ -19,6 +19,20 @@ class Im3xWidget {
         }
     }
 
+    getTime(time){
+        return time.toLocaleDateString().replaceAll("/",'')
+    }
+
+    getLevel(list,dt){
+        var level="";
+        list.forEach((item)=>{
+            if(item.biz_date==dt)
+            {
+                return item.level
+            }
+        })
+    }
+
     async renderUI() {
         let w = new ListWidget()
         let weekDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
@@ -34,7 +48,13 @@ class Im3xWidget {
         w.addSpacer(4)
 
         //创作指数
-        let data = await this.getData()
+        //start_date 1639891218374 2021-12-19 13:20:18
+        //end_date   1648963218374 2022-04-03 13:20:18
+        var dayTime=24 * 3600 * 1000;
+        var weekTime=7 * dayTime;
+        let end=new Date().getTime()
+        let start=new Date(end- 15*weekTime).getTime()
+        let data = await this.getData(end,start)
         for (let day = 0; day < weekDay.length; day++) {
             let row = w.addStack()
 
@@ -53,13 +73,24 @@ class Im3xWidget {
             }
 
             //设置创作指数
-            for (let week = 0; i < 15; week++) {
+            for (let week = 0; i < 16; week++) {
                 let context = new DrawContext()
                 context.size = new Size(ww, h)
                 context.opaque = false
                 context.respectScreenScale = false
 
-                let level=data.data[day*week]["level"];
+                //数据返回106条               
+                //界面上显示16周，数据只有15周加1天
+                //           -15周           -1周                 0      
+                //周日     2021-12-19                        2022-04-03  
+                //周1      2022-12-20 
+                //周2       21
+                //周3       22
+                //周4       23
+                //周5       24
+                //周6       25
+                var dt= this.getTime(new Date(start+(dayTime*day)+ (week+1)*weekTime))
+                var level=getLevel(data.data.hotmap,dt);
                 let hotColor="";
                 switch(level)
                 {
@@ -84,6 +115,9 @@ class Im3xWidget {
                     case "5":
                         hotColor="#21472c";
                         break;
+                    default:
+                        hotColor:"#ffffff";
+                        break;
                 }
 
                 context.setFillColor(new Color(hotColor, 1))
@@ -91,8 +125,6 @@ class Im3xWidget {
                 path.addRoundedRect(new Rect(0, 0, ww, h), 0, 0)
                 context.addPath(path)
                 context.fillPath()
-
-                context.setFillColor(new Color("#373737", 1))
                 row.addImage(context.getImage())
                 row.addSpacer(3)
             }
@@ -113,14 +145,11 @@ class Im3xWidget {
         return this.renderUI()
     }
     //加载下载数据
-    async getData() {
-        //start_date 1639891218374 2021-12-19 13:20:18
-        //end_date   1648963218374 2022-04-03 13:20:18
-        let end=new Date().getTime()
-        let start=new Date(end- 15*7 * 24 * 3600 * 1000).getTime()
+    async getData(end,start) {
+        
         let api = 'https://www.yuque.com/api/users/1493705/hotmap?end_date='+end+'&start_date='+start
         let req = new Request(api)
-        let res = await req.loaddaySON()
+        let res = await req.loadJSON()
         console.log(res)
         return res
     }
