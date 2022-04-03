@@ -28,7 +28,7 @@ class Im3xWidget {
         var year = datetime.getFullYear();
         var month = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
         var date = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
-        var text = year + month + date;
+        var text = "" + year + month + date;
         return text;
     }
 
@@ -104,15 +104,15 @@ class Im3xWidget {
                 //周4       23
                 //周5       24
                 //周6       25
-                var offsetDate=new Date(start + (dayTime * day) + (week) * weekTime)
+                var offsetDate = new Date(start + (dayTime * day) + (week) * weekTime)
                 console.log(offsetDate);
                 var dt = this.getTime(offsetDate)
                 console.log(dt)
                 var level = this.getLevel(data.data.hotmap, dt);
                 //console.log(level)
                 let hotColor = "";
-                console.log(level+"");
-                switch (level+"") {
+                console.log(level + "");
+                switch (level + "") {
                     case "":
                     case "-1":
                     default:
