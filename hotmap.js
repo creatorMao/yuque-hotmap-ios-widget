@@ -19,6 +19,11 @@ class Im3xWidget {
         }
     }
 
+    /**
+     * 将一个日期对象转成日期字符串（例如20220403）
+     * @param {*} datetime 日期对象
+     * @returns            日期字符串（例如20220403）
+     */
     getTime(datetime) {
         var year = datetime.getFullYear();
         var month = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
@@ -27,13 +32,20 @@ class Im3xWidget {
         return text;
     }
 
+    /**
+     * 获取指定日期的创作等级
+     * @param {*} list 等级数组
+     * @param {*} dt   日期 例如：20220403
+     * @returns        等级：-1到5 或者空
+     */
     getLevel(list, dt) {
         var level = "";
         list.forEach((item) => {
             if (item.biz_date == dt) {
-                return item.level
+                level = item.level
             }
         })
+        return level
     }
 
     async renderUI() {
@@ -93,7 +105,9 @@ class Im3xWidget {
                 //周5       24
                 //周6       25
                 var dt = this.getTime(new Date(start + (dayTime * day) + (week + 1) * weekTime))
+                console.log(dt)
                 var level = this.getLevel(data.data.hotmap, dt);
+                console.log(level)
                 let hotColor = "";
                 switch (level) {
                     case "-1":
