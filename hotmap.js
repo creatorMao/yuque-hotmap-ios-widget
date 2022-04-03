@@ -57,7 +57,7 @@ class IosWidget {
         let container = new ListWidget()
 
         if (!this.arg) {
-            var tips = container.addText('请在小组件参数处填写余雀用户id！')
+            var tips = container.addText('请在小组件参数处填写语雀用户id！')
             tips.textColor = new Color("#fb7299")
             tips.font = Font.systemFont(14)
 
