@@ -58,7 +58,7 @@ class IosWidget {
         icon.imageSize = new Size(40, 16)
         let title = header.addText("｜创作指数")
         title.font = Font.systemFont(10)
-        container.addSpacer(4)
+        container.addSpacer(3)
 
         //创作指数
         //start_date 开始日期 1639891218374 2021-12-19 13:20:18
@@ -144,9 +144,9 @@ class IosWidget {
                 context.addPath(path)
                 context.fillPath()
                 row.addImage(context.getImage())
-                row.addSpacer(3)
+                row.addSpacer(2)
             }
-            container.addSpacer(3)
+            container.addSpacer(2)
         }
         return container
     }
