@@ -79,7 +79,9 @@ class IosWidget {
         var dayTime = 24 * 3600 * 1000;
         var weekTime = 7 * dayTime;
         let end = new Date().getTime()
-        let start = new Date(end - (weekCount - 1) * weekTime).getTime()
+
+        //start从周一往前推
+        let start = new Date(end-(new Date.getDay()*dayTime) - (weekCount - 1) * weekTime).getTime()
         let data = await this.getData(end, start)
         let weekDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
         for (let day = 0; day < weekDay.length; day++) {
