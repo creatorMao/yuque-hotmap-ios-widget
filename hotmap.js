@@ -70,7 +70,7 @@ class IosWidget {
         let icon = header.addImage(await this.getImage('https://gw.alipayobjects.com/mdn/prod_resou/afts/img/A*OwZWQ68zSTMAAAAAAAAAAABkARQnAQ'))
         icon.imageSize = new Size(40, 16)
         let title = header.addText("｜创作指数")
-        title.font = Font.systemFont(10)
+        title.font = Font.systemFont(9)
         container.addSpacer(3)
 
         //创作指数
