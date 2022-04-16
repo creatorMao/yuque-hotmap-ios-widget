@@ -163,6 +163,9 @@ class IosWidget {
             }
             container.addSpacer(2)
         }
+
+        container.url="yuque://"
+
         return container
     }
     //加载下载数据
