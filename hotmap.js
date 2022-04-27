@@ -133,22 +133,22 @@ class IosWidget {
                         hotColor = "#ffffff";
                         break;
                     case "0":
-                        hotColor = "#f5f5f5";
+                        hotColor = "#f4f5f5";
                         break;
                     case "1":
-                        hotColor = "#e1f2e2";
+                        hotColor = "#daf6ea";
                         break;
                     case "2":
-                        hotColor = "#bee8c8";
+                        hotColor = "#c7f0df";
                         break;
                     case "3":
-                        hotColor = "#6bb579";
+                        hotColor = "#82edc0";
                         break;
                     case "4":
-                        hotColor = "#397549";
+                        hotColor = "#00b96b";
                         break;
                     case "5":
-                        hotColor = "#21472c";
+                        hotColor = "#00663b";
                         break;
                 }
                 //console.log(hotColor);
